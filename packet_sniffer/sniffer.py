@@ -1,46 +1,3 @@
-# Sockets
-
-## TCP Sockets
-![TCP](sockets-tcp.avif)
-
-### Single-Echo-Server
-
-#### Echo Server
-```python
-# SERVER
-import socket
-PORT = 65435
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind(('localhost', PORT))
-    s.listen()
-    print(f"Server started to listen on:{PORT}") #
-    conn, addr = s.accept()
-    print(f'Connected by {addr}')
-    print(f'\nConn: {conn}')
-    while True:
-        data = conn.recv(2048)
-        if not data:
-            break
-        conn.sendall(data)
-```
-
-```pycon
-# CLIENT
-import socket
-PORT = 65435
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    # connectare
-    s.connect(('localhost', PORT))
-    s.sendall(b'Hello World')
-    data = s.recv(1024)
-print(f'Received: {data!r}')
-```
----
-> Diffs `.send()` & `.sendall()`  
-> Apeleaza `.send()` & `.recv()` pana toate datele sunt trimise
-
-#### Packet Sniffer
-```python
 import socket
 import struct
 import textwrap
@@ -111,5 +68,3 @@ def ipv4_packet(data):
 
 if __name__ == '__main__':
     main()
-```
-
